@@ -56,12 +56,9 @@ export const useUserStore = defineStore('user', {
 
 
 
-
-
-
+      
 
       async login(obj){
-        // console.log(obj);
         try {
           const {data} = await axios({
             url : `${baseUrl}/user/login`,
