@@ -1,4 +1,38 @@
-<script></script>
+<script>
+import { mapActions } from 'pinia';
+import { useUserStore } from '../stores/user';
+
+export default {
+  name : "RegisterPage",
+  data(){
+    return { 
+      input : {
+        username : "",
+        email : "",
+        password : ""
+
+      }
+    }
+
+
+  },
+  methods : {
+    ...mapActions(useUserStore, ["register"]),
+    
+
+    
+    handleRegister(){
+      console.log('>>>>>>>>>>>>>>');
+      
+      this.register(this.input)
+
+    }
+
+  }
+}
+
+
+</script>
 
 <template>
   <main>
@@ -17,11 +51,10 @@
                   class="logo d-flex align-items-center w-auto"
                 >
                   <img src="../assets/img/logo.png" alt="" />
-                  <span class="d-none d-lg-block">NiceAdmin</span>
+                  <span class="d-none d-lg-block">Finanza</span>
                 </a>
               </div>
               <!-- End Logo -->
-
               <div class="card mb-3">
                 <div class="card-body">
                   <div class="pt-4 pb-2">
@@ -33,37 +66,20 @@
                     </p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
-                    <div class="col-12">
+                  <form @submit.prevent="handleRegister" class="row g-3 needs-validation" >
+                    <!-- <div class="col-12">
                       <label for="yourName" class="form-label">Your Name</label>
                       <input
                         type="text"
                         name="name"
                         class="form-control"
                         id="yourName"
-                        required
+                        requiredr
                       />
                       <div class="invalid-feedback">
                         Please, enter your name!
                       </div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="yourEmail" class="form-label"
-                        >Your Email</label
-                      >
-                      <input
-                        type="email"
-                        name="email"
-                        class="form-control"
-                        id="yourEmail"
-                        required
-                      />
-                      <div class="invalid-feedback">
-                        Please enter a valid Email adddress!
-                      </div>
-                    </div>
-
+                    </div> -->
                     <div class="col-12">
                       <label for="yourUsername" class="form-label"
                         >Username</label
@@ -77,13 +93,30 @@
                           name="username"
                           class="form-control"
                           id="yourUsername"
-                          required
+                          v-model="input.username"
                         />
                         <div class="invalid-feedback">
                           Please choose a username.
                         </div>
                       </div>
                     </div>
+
+                    <div class="col-12">
+                      <label for="yourEmail" class="form-label"
+                        >Your Email</label
+                      >
+                      <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        id="yourEmail"
+                        v-model="input.email"
+                      />
+                      <div class="invalid-feedback">
+                        Please enter a valid Email adddress!
+                      </div>
+                    </div>
+
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label"
@@ -94,7 +127,7 @@
                         name="password"
                         class="form-control"
                         id="yourPassword"
-                        required
+                        v-model="input.password"
                       />
                       <div class="invalid-feedback">
                         Please enter your password!
@@ -109,7 +142,6 @@
                           type="checkbox"
                           value=""
                           id="acceptTerms"
-                          required
                         />
                         <label class="form-check-label" for="acceptTerms"
                           >I agree and accept the
@@ -128,7 +160,7 @@
                     <div class="col-12">
                       <p class="small mb-0">
                         Already have an account?
-                        <a href="pages-login.html">Log in</a>
+                        <a @click.prevent="this.$router.push('/login')" href="">Log in</a>
                       </p>
                     </div>
                   </form>

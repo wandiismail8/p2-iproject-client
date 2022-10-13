@@ -1,4 +1,50 @@
-<script></script>
+<script>
+import { mapActions } from "pinia";
+import { useUserStore } from "../stores/user";
+
+export default {
+  name: "LoginPage",
+  data() {
+    return {
+      input: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions(useUserStore, ["login"]),
+    handleLogin() {
+      // console.log('>>>>>>>>>');
+      this.login(this.input);
+    },
+  },
+};
+
+
+  // window.fbAsyncInit = function() {
+  //   FB.init({
+  //     appId      : '{your-app-id}',
+  //     cookie     : true,
+  //     xfbml      : true,
+  //     version    : '{api-version}'
+  //   });
+      
+  //   FB.AppEvents.logPageView();   
+      
+  // };
+
+  // (function(d, s, id){
+  //    var js, fjs = d.getElementsByTagName(s)[0];
+  //    if (d.getElementById(id)) {return;}
+  //    js = d.createElement(s); js.id = id;
+  //    js.src = "https://connect.facebook.net/en_US/sdk.js";
+  //    fjs.parentNode.insertBefore(js, fjs);
+  //  }(document, 'script', 'facebook-jssdk'));
+
+
+
+</script>
 
 <template>
   <main>
@@ -17,7 +63,7 @@
                   class="logo d-flex align-items-center w-auto"
                 >
                   <img src="../assets/img/logo.png" alt="" />
-                  <span class="d-none d-lg-block">NiceAdmin</span>
+                  <span class="d-none d-lg-block">Finanza</span>
                 </a>
               </div>
               <!-- End Logo -->
@@ -33,25 +79,23 @@
                     </p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <form
+                    @submit.prevent="handleLogin"
+                    class="row g-3 needs-validation"
+                  >
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label"
-                        >Username</label
+                      <label for="yourEmail" class="form-label"
+                        >Your Email</label
                       >
-                      <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend"
-                          >@</span
-                        >
-                        <input
-                          type="text"
-                          name="username"
-                          class="form-control"
-                          id="yourUsername"
-                          required
-                        />
-                        <div class="invalid-feedback">
-                          Please enter your username.
-                        </div>
+                      <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        id="yourEmail"
+                        v-model="input.email"
+                      />
+                      <div class="invalid-feedback">
+                        Please enter a valid Email adddress!
                       </div>
                     </div>
 
@@ -64,7 +108,7 @@
                         name="password"
                         class="form-control"
                         id="yourPassword"
-                        required
+                        v-model="input.password"
                       />
                       <div class="invalid-feedback">
                         Please enter your password!
@@ -93,13 +137,20 @@
                     <div class="col-12">
                       <p class="small mb-0">
                         Don't have account?
-                        <a href="pages-register.html">Create an account</a>
+                        <a
+                          @click.prevent="this.$router.push('/register')"
+                          href=""
+                          >Create an account</a
+                        >
                       </p>
                     </div>
                   </form>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="d-flex justify-content-center py-4">
+          <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
           </div>
         </div>
       </section>
